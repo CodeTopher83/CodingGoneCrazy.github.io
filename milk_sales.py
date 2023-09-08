@@ -77,3 +77,34 @@ while True:
         break
     else:
         print("Invalid choice. Please select a valid option.")
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/process_milk_order', methods=['POST'])
+def process_milk_order():
+    # Get data from the HTTP request
+    data = request.get_json()
+
+    # Retrieve user inputs
+    milk_type = data['milkType']
+    milk_size = data['milkSize']
+    weekly_sales = int(data['weeklySales'])
+    quantity_available = int(data['quantityAvailable'])
+    days_to_delivery = int(data['daysToDelivery'])
+
+    # Perform calculations and logic here
+    # For simplicity, let's just echo back the input data
+    result = {
+        'milkType': milk_type,
+        'milkSize': milk_size,
+        'weeklySales': weekly_sales,
+        'quantityAvailable': quantity_available,
+        'daysToDelivery': days_to_delivery
+    }
+
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
